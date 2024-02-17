@@ -30,13 +30,17 @@ export default function DashboardPage() {
         <Tabs defaultValue="overview" className="space-y-4">
           <TabsList>
             <TabsTrigger value="overview">Overview</TabsTrigger>
-            <TabsTrigger value="analytics" disabled>
+            <TabsTrigger value="analytics" disabled className="hidden md:flex">
               Analises
             </TabsTrigger>
-            <TabsTrigger value="reports" disabled>
+            <TabsTrigger value="reports" disabled className="hidden md:flex">
               Relatorios
             </TabsTrigger>
-            <TabsTrigger value="notifications" disabled>
+            <TabsTrigger
+              value="notifications"
+              disabled
+              className="hidden md:flex"
+            >
               Notificações
             </TabsTrigger>
           </TabsList>
