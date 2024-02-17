@@ -43,11 +43,7 @@ export default function DashboardPage() {
           <TabsContent value="overview" className="space-y-4">
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-2">
               {teams ? (
-                <CardTotalAmount
-                  title="Times"
-                  text={teams.length.toString()}
-                  subText="10,32% a mais no ultimo mês"
-                />
+                <CardTotalAmount title="Times" text={teams.length.toString()} />
               ) : (
                 <CardTotalAmountSkeleton />
               )}
@@ -56,7 +52,6 @@ export default function DashboardPage() {
                 <CardTotalAmount
                   title="Jogadores"
                   text={players.length.toString()}
-                  subText="10,32% a mais no ultimo mês"
                 />
               ) : (
                 <CardTotalAmountSkeleton />

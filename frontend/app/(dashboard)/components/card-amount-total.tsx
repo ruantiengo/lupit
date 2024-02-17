@@ -5,9 +5,8 @@ import TeamIcon from "./team-icon";
 interface CardTotalQuantityProps {
   title: string;
   text: string;
-  subText: string;
 }
-const CardTotalAmount = ({ title, text, subText }: CardTotalQuantityProps) => {
+const CardTotalAmount = ({ title, text }: CardTotalQuantityProps) => {
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -16,7 +15,6 @@ const CardTotalAmount = ({ title, text, subText }: CardTotalQuantityProps) => {
       </CardHeader>
       <CardContent>
         <div className="text-2xl font-bold">{text}</div>
-        <p className="text-xs text-muted-foreground">{subText}</p>
       </CardContent>
     </Card>
   );
