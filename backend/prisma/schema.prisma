@@ -1,0 +1,52 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+  // If you want to use Prisma Migrate, you will need to manually create a shadow database
+  // https://neon.tech/docs/guides/prisma-migrate#configure-a-shadow-database-for-prisma-migrate
+  // make sure to append ?connect_timeout=10 to the connection string
+  // shadowDatabaseUrl = env(“SHADOW_DATABASE_URL”)
+}
+
+model Team {
+  id        String  @id @default(cuid()) // Use cuid() for UUID generation
+  name      String
+  badge     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime?
+  players   Player[] @relation("TeamToPlayer")
+  oldTeams  Transfer[] @relation("OldTeam")  // No change here
+  newTeams  Transfer[] @relation("NewTeam")  // No change here
+}
+
+model Player {
+  id        String  @id @default(cuid())
+  name      String
+  salary    Float
+  birthDay  DateTime
+  team      Team?   @relation("TeamToPlayer", fields: [teamId], references: [id]) // Make team optional
+  teamId    String?
+  position  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime? @updatedAt
+  transfers Transfer[] @relation("transferPlayer")
+}
+
+model Transfer {
+  id           String  @id @default(cuid())
+  oldTeam       Team?   @relation("OldTeam", fields: [oldTeamId], references: [id]) // Make oldTeam optional
+  newTeam       Team?   @relation("NewTeam", fields: [newTeamId], references: [id])
+  oldTeamId     String?  
+  newTeamId     String
+  playerId     String
+  player       Player   @relation("transferPlayer", fields: [playerId], references: [id])
+  transferDate DateTime @updatedAt
+}
