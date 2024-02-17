@@ -26,7 +26,7 @@ export default function RootLayout({ children }: any) {
           fontSans.variable
         )}
       >
-        <div className="hidden flex-col md:flex">
+        <div className=" flex-col flex">
           <div className="border-b px-4 sticky top-0 z-20 bg-white">
             <div className="flex h-16 items-center ">
               <MainNav className="mx-6 " />
