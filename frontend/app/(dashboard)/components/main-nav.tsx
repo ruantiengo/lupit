@@ -25,6 +25,7 @@ export function MainNav({
     >
       {routes.map((r) => (
         <Link
+          key={r.link}
           href={r.link}
           className={`text-sm font-medium transition-colors hover:text-primary ${
             path === r.link ? "" : "text-muted-foreground"
