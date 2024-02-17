@@ -45,7 +45,8 @@ export function UpsertTeamDialog({ team }: UpsertTeamDialogProps) {
         } else {
           addTeam(result.data);
         }
-
+        setBadge(null);
+        setName("");
         toast({
           variant: "default",
           title: "Time salvo com sucesso.",

@@ -50,11 +50,9 @@ export class TeamsController {
     @Body() updateTeamDto: UpdateTeamDto,
     @UploadedFile() file?: UploadedFileMetadata,
   ) {
-    console.log(id);
-
     let storageUrl = '';
 
-    if (file) {
+    if (file.size !== '0') {
       storageUrl = await this.azureBlobStorage.upload(file);
     }
 
