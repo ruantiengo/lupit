@@ -1,10 +1,14 @@
-import { AzureStorageService } from '@nestjs/azure-storage';
+import {
+  AzureStorageService,
+  UploadedFileMetadata,
+} from '@nestjs/azure-storage';
 import { TeamsService } from './teams.service';
 import { TeamsController } from './teams.controller';
 import { Test, TestingModule } from '@nestjs/testing';
 import { CreateTeamDto } from './dto/create-team.dto';
 import { faker } from '@faker-js/faker';
 import { UpdateTeamDto } from './dto/update-team.dto';
+import { UploadedFile } from '@nestjs/common';
 
 describe('TeamsController create()', () => {
   let teamsService: TeamsService;
@@ -47,7 +51,7 @@ describe('TeamsController create()', () => {
       const createTeamDto: CreateTeamDto = {
         name: faker.person.firstName(),
         file: faker.image.url(),
-        id: faker.datatype.uuid(),
+        id: faker.database.mongodbObjectId(),
       };
       const storageUrl = '';
       (azureBlobStorage.upload as jest.Mock).mockResolvedValue(storageUrl);
@@ -84,7 +88,9 @@ describe('TeamsController create()', () => {
       const storageUrl = '';
       (azureBlobStorage.upload as jest.Mock).mockResolvedValue(storageUrl);
 
-      await controller.update(id, updateTeamDto);
+      await controller.update(id, updateTeamDto, {
+        size: '0',
+      } as UploadedFileMetadata);
 
       expect(teamsService.update).toHaveBeenCalledWith(id, updateTeamDto, '');
     });
@@ -99,9 +105,11 @@ describe('TeamsController create()', () => {
         new Error('Team update failed'),
       );
 
-      await expect(controller.update(id, updateTeamDto)).rejects.toThrowError(
-        'Team update failed',
-      );
+      await expect(
+        controller.update(id, updateTeamDto, {
+          size: '0',
+        } as UploadedFileMetadata),
+      ).rejects.toThrowError('Team update failed');
     });
   });
 
