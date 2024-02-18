@@ -19,7 +19,11 @@ export const saveTeam = async (team: CreateUpdateTeam): Promise<any> => {
   formData.append("name", team.name);
   if (team.id) {
     formData.append("id", team.id ?? "");
-    return await api.patch(`/teams/${team.id}`, formData, {});
+    return await api.patch(`/teams/${team.id}`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
   }
   return await api.post("/teams", formData, {});
 };
