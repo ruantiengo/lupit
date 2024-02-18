@@ -16,7 +16,7 @@ export function MainNav({
   const routes = [
     { link: "/", title: "Dashboard" },
     { link: "/teams", title: "Times" },
-    { link: "/players", title: "Jogadore" },
+    { link: "/players", title: "Jogadores" },
   ];
   return (
     <nav
